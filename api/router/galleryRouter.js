@@ -26,11 +26,12 @@ router.route('/galleries')
 router.route('/galleries/:gallery_id')
     .put(controller.editGallery)
     .delete(controller.deleteGallery)
-    .get(controller.listPhotos)
+    .get(controller.galleryView)
     .post(controller.createPhoto)
 
 router.route('/galleries/:gallery_id/:photo_id')
     .put(controller.updatePhoto)
+    .delete(controller.deletePhoto)
 
 router.route('/artists')
     .get(controller.listArtists)
@@ -38,4 +39,8 @@ router.route('/artists')
 
 router.route('/artists/:artist_id')
     .put(controller.editArtist)
+    .delete(controller.deleteArtist)
+    .get(controller.artistView)
+
+
 module.exports = router;
