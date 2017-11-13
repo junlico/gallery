@@ -1,31 +1,24 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavLink from './components/NavLink';
 import Galleries from './components/Galleries';
-// import GalleryView from './components/GalleryView';
-// import Artists from './components/Artists';
-// import ArtistView from './components/ArtistView';
 import './style.css';
 
 const api_url = 'http://localhost:3001/api'
+
 class App extends Component {
 
     render() {
         return (
             <Router>
-                <div className='container'>
+                <div className="container">
                     <h1>Gallery</h1>
                     <ul className="nav nav-pills nav-fill">
                         <li className="nav-item"><NavLink to='/galleries'>Galleries</NavLink></li>
                         <li className="nav-item"><NavLink to='/images'>Images</NavLink></li>
                         <li className="nav-item"><NavLink to='/artists'>Artists</NavLink></li>
                     </ul>
-
-                    {/* <Route exact path='/' component={Galleries}/>
-                    <Route path='/artists' component={Artists}/>
-                    <Route path='/images' component={GalleryView}/>
-                    <Route path='/artist/:artist_id' component={ArtistView}/> */}
 
                     <Route exact path='/galleries' render={() => (
                         <Galleries
@@ -35,6 +28,7 @@ class App extends Component {
                 </div>
             </Router>
         )
-    }
-}
-ReactDOM.render(<App />, document.getElementById('root'));
+    };
+};
+
+ReactDOM.render(<App/>, document.getElementById('root'));

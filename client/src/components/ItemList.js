@@ -3,7 +3,6 @@ import Item from './Item';
 import LoadingGif from '../assets/Spinner.gif';
 
 const ItemList = (props) => {
-    console.log(props)
     if (props.loading) {
         return (
             <img src={LoadingGif} alt="LoadingGIF" />
@@ -15,7 +14,9 @@ const ItemList = (props) => {
                     return (
                         <Item
                             key={i}
+                            view={props.view}
                             data={item}
+                            delete={props.delete}
                         />
                     )
                 })}
@@ -23,7 +24,7 @@ const ItemList = (props) => {
         )
     } else {
         return (
-            <h2>Currently No Gallery in database</h2>
+            <h2>No data in database</h2>
         )
     }
 };

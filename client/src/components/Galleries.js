@@ -19,7 +19,7 @@ export default class Galleries extends Component {
         };
         this.loadGalleries = this.loadGalleries.bind(this);
         this.createGallery = this.createGallery.bind(this);
-        // this.deleteGallery = this.deleteGallery.bind(this);
+        this.deleteGallery = this.deleteGallery.bind(this);
     }
 
 
@@ -51,18 +51,18 @@ export default class Galleries extends Component {
     };
 
 
-    // deleteGallery(gallery_id) {
+    deleteGallery(gallery_id) {
 
-    //     this.setState({ loading: true });
+        this.setState({ loading: true });
 
-    //     axios.delete(this.props.api+gallery_id)
-    //     .then(res => {
-    //         this.setState({
-    //             galleries: res.data,
-    //             loading: false
-    //         })
-    //     })
-    // };
+        axios.delete(this.props.api+'/'+gallery_id)
+        .then(res => {
+            this.setState({
+                galleries: res.data,
+                loading: false
+            })
+        })
+    };
 
     componentDidMount() {
 
@@ -77,8 +77,10 @@ export default class Galleries extends Component {
                     onSubmit={this.createGallery}
                 />
                 <ItemList
+                    view='galleries'
                     data={this.state.galleries}
                     loading={this.state.loading}
+                    delete={this.deleteGallery}
                 />
             </div>
         )
