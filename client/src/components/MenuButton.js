@@ -9,7 +9,7 @@ const schema = {
       name: {type: "string", title: "Name"},
       description: {type: "string", title: "Description"}
     }
-  };
+};
 
 
 export default class MenuButton extends Component {
@@ -47,8 +47,7 @@ export default class MenuButton extends Component {
             <div>
                 <button type="button" className="menu btn btn-info" onClick={this.onClick}>Add New Gallery</button>
                 {this.state.formVisible &&
-                    <Form
-                        refs="form"
+                    <Form className="menuButton"
                         schema={schema}
                         children={
                             <div>

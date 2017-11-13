@@ -52,11 +52,11 @@ export default class Galleries extends Component {
     };
 
 
-    editGallery(gallery_id) {
+    editGallery(gallery_id, {formData}) {
 
         this.setState({ loading: true });
 
-        axios.put(this.props.api+'/'+gallery_id)
+        axios.put(this.props.api+'/'+gallery_id, formData)
         .then(res => {
             this.setState({
                 galleries: res.data,

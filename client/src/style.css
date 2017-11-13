@@ -22,7 +22,12 @@ button.form {
     margin-bottom: 20px;
 }
 
-form.rjsf {
+Form.menuButton {
     margin-left: 30%;
     width: 40%;
 }
+
+Form.editForm {
+    width: 60%;
+}
+
