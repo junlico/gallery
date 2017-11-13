@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ItemList from './ItemList';
-import MenuButton from './MenuButton';
+import ButtonList from './ButtonList';
 
 
 const schema = {
     type: "object",
     required: ["name"],
     properties: {
-      name: {type: "string", title: "Name"},
-      description: {type: "string", title: "Description"}
+        name: {type: "string", title: "Name"},
+        description: {type: "string", title: "Description"}
     }
 };
 
@@ -92,10 +92,17 @@ export default class Galleries extends Component {
     render() {
         return (
             <div>
-                <MenuButton
-                    buttonName="Add New Gallery"
+                <ButtonList
                     schema={schema}
-                    onSubmit={this.createGallery}
+                    buttonList={
+                        [
+                            {
+                                buttonName: "Add Gallery",
+                                onSubmit: this.createGallery
+                            }
+                        ]
+                    }
+
                 />
                 <ItemList
                     view='galleries'

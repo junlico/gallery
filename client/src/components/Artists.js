@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ItemList from './ItemList';
-import MenuButton from './MenuButton';
+import ButtonList from './ButtonList';
 
 
 const schema = {
     type: "object",
     required: ["name"],
     properties: {
-      name: {type: "string", title: "Name"},
-      birth_year: {type: "number", title: "Birth Year"},
-      country: {type: "string", title: "Country"},
-      description: {type: "string", title: "Description"}
+        name: {type: "string", title: "Name"},
+        birth_year: {type: "number", title: "Birth Year"},
+        country: {type: "string", title: "Country"},
+        description: {type: "string", title: "Description"}
     }
 };
 
@@ -94,10 +94,10 @@ export default class Artists extends Component {
     render() {
         return (
             <div>
-                <MenuButton
-                    buttonName="Add New Artist"
+                <ButtonList
+                    buttonName={["Add New Artist"]}
                     schema={schema}
-                    onSubmit={this.createArtist}
+                    onSubmit={[this.createArtist]}
                 />
                 <ItemList
                     view='artists'

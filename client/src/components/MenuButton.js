@@ -24,7 +24,7 @@ export default class MenuButton extends Component {
 
     onSubmit({formData}) {
         this.setState({formVisible: false});
-        this.props.onSubmit({formData});
+        this.props.button.onSubmit({formData});
     }
 
     onCancel(event) {
@@ -36,7 +36,7 @@ export default class MenuButton extends Component {
 
         return (
             <div>
-                <button type="button" className="menu btn btn-info" onClick={this.onClick}>{this.props.buttonName}</button>
+                <button type="button" className="menu btn btn-info" onClick={this.onClick}>{this.props.button.buttonName}</button>
                 {this.state.formVisible &&
                     <Form className="menuButton"
                         schema={this.props.schema}
