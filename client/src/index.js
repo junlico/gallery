@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavLink from './components/NavLink';
 import Galleries from './components/Galleries';
 // import Artists from './components/Artists';
-// import GalleryView from './components/GalleryView';
+import GalleryView from './components/GalleryView';
 import './style.css';
 
 const base_url = 'http://localhost:3001/api'
@@ -34,7 +34,7 @@ class App extends Component {
                         />
                     )}/> */}
 
-                    {/* <Route path='/galleries/:gallery_id' component={GalleryView}/> */}
+                    <Route path='/galleries/:gallery_id' component={GalleryView}/>
                 </div>
             </Router>
         )

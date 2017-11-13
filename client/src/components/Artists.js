@@ -95,9 +95,15 @@ export default class Artists extends Component {
         return (
             <div>
                 <ButtonList
-                    buttonName={["Add New Artist"]}
                     schema={schema}
-                    onSubmit={[this.createArtist]}
+                    buttonList={
+                        [
+                            {
+                                buttonName: "Add Artist",
+                                onSubmit: this.createArtist
+                            }
+                        ]
+                    }
                 />
                 <ItemList
                     view='artists'

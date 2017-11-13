@@ -5,40 +5,52 @@ import Form from "react-jsonschema-form";
 export default class MenuButton extends Component {
 
     constructor() {
-        super()
+        super();
 
         this.state = {
-            formVisible: false
-        }
-        this.onClick = this.onClick.bind(this);
+            clicked: -1,
+            formVisible: false,
+            editTrigger: false
+        };
+
+        this.clickHandler = this.clickHandler.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onCancel = this.onCancel.bind(this);
     }
 
-    onClick(event) {
-        event.preventDefault();
-        this.setState({
-            formVisible: !this.state.formVisible
-        });
+    clickHandler(event) {
+        var nodes = Array.prototype.slice.call(event.currentTarget.children);
+        var index = nodes.indexOf(event.target );
+        this.setState({ clicked: index });
     }
 
     onSubmit({formData}) {
-        this.setState({formVisible: false});
-        this.props.button.onSubmit({formData});
+        if (this.state.clicked === 0) {
+            this.props.create({formData});
+        } else if (this.state.clicked === 1) {
+            // this.props.edit
+        }
+        this.setState({ clicked: -1 });
     }
 
     onCancel(event) {
         event.preventDefault();
-        this.setState({ formVisible: false });
+        this.setState({
+            clicked: -1
+        });
     }
 
     render() {
-
         return (
             <div>
-                <button type="button" className="menu btn btn-info" onClick={this.onClick}>{this.props.button.buttonName}</button>
-                {this.state.formVisible &&
+                <div onClick={this.clickHandler}>
+                {this.props.buttonList.map((item, i) => {
+                    return <button key={i} type="button" className={item.buttonClass}>{item.buttonName}</button>
+                })}
+                </div>
+                {(this.state.clicked === 0 || this.state.clicked === 1) &&
                     <Form className="menuButton"
+                        autocomplete="off"
                         schema={this.props.schema}
                         children={
                             <div>
@@ -47,7 +59,6 @@ export default class MenuButton extends Component {
                             </div>
                         }
                         onSubmit={this.onSubmit}
-                        autocomplete="off"
                     />
                 }
             </div>

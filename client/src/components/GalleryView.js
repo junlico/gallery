@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ButtonList from './ButtonList';
+import MenuButton from './MenuButton';
 import PhotoGallery from './PhotoGallery';
 import LoadingGif from '../assets/Spinner.gif';
 
@@ -28,7 +28,6 @@ export default class GallerView extends Component {
 
         this.state ={
             gallery: {},
-            photos: [],
             loading: false
         };
 
@@ -42,7 +41,6 @@ export default class GallerView extends Component {
         this.setState({ loading: true });
 
         axios.get(base_url+this.props.match.url)
-        // axios.get('http://localhost:3001/api/galleries/5a09c1c63629e02fc4d4c724')
         .then(res => {
             // console.log(res.data.photos)
             this.setState({
@@ -51,6 +49,7 @@ export default class GallerView extends Component {
             })
         });
     };
+
 
     createPhoto({formData}) {
         this.setState({ loading: true });
@@ -72,10 +71,17 @@ export default class GallerView extends Component {
     render() {
         return (
             <div>
-                <ButtonList
-                    buttonName={["Add Photo"]}
+                <MenuButton
+                    refs="buttons"
                     schema={schema}
-                    onSubmit={this.createPhoto}
+                    create={this.createPhoto}
+                    buttonList={
+                        [
+                            { buttonName: "Add Photo", buttonClass: "menu btn btn-info" },
+                            { buttonName: "Edit Photo", buttonClass: "menu btn btn-warning" },
+                            { buttonName: "Delete Photo", buttonClass: "menu btn btn-danger" }
+                        ]
+                    }
                 />
 
                 { this.state.loading ?
@@ -85,6 +91,7 @@ export default class GallerView extends Component {
                     :
                     <div>
                     <PhotoGallery
+                        refs="photos"
                         photos={this.state.gallery.photos}
                     />
                     </div>
