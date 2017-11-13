@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import MenuButton from './MenuButton';
-import PhotoGallery from './PhotoGallery';
+import ImageGallery from 'react-image-gallery';
+// import PhotoGallery from './PhotoGallery';
 import LoadingGif from '../assets/Spinner.gif';
 
 const base_url = 'http://localhost:3001/api';
@@ -25,7 +26,6 @@ export default class GallerView extends Component {
 
     constructor(props) {
         super(props);
-
         this.state ={
             gallery: {},
             loading: false
@@ -33,6 +33,9 @@ export default class GallerView extends Component {
 
         this.loadPhotos = this.loadPhotos.bind(this);
         this.createPhoto = this.createPhoto.bind(this);
+        this.editPhoto = this.editPhoto.bind(this);
+        this.deletePhoto = this.deletePhoto.bind(this);
+        this.getDefaultValue = this.getDefaultValue.bind(this);
     };
 
 
@@ -61,7 +64,50 @@ export default class GallerView extends Component {
                 loading: false
             });
         });
+    };
+
+
+    editPhoto({formData}) {
+        if (this.state.gallery.photos && this.state.gallery.photos.length > 0) {
+            let index = this.refs.photos.getCurrentIndex();
+            let photo_id = this.state.gallery.photos[index]._id;
+
+            this.setState({ loading: true });
+
+            axios.put(base_url+this.props.match.url+'/'+photo_id, formData)
+            .then(res => {
+                this.setState({
+                    gallery: res.data,
+                    loading: false
+                });
+            });
+        };
+    };
+
+    deletePhoto() {
+        if (this.state.gallery.photos && this.state.gallery.photos.length > 0) {
+            let index = this.refs.photos.getCurrentIndex();
+            let photo_id = this.state.gallery.photos[index]._id;
+
+            this.setState({ loading: true });
+
+            axios.delete(base_url+this.props.match.url+'/'+photo_id)
+            .then(res => {
+                this.setState({
+                    gallery: res.data,
+                    loading: false
+                })
+            });
+        };
+    };
+
+    getDefaultValue() {
+        let index = this.refs.photos.getCurrentIndex();
+        let photo = this.state.gallery.photos[index];
+        return photo;
     }
+
+
 
     componentDidMount() {
         this.loadPhotos();
@@ -69,12 +115,17 @@ export default class GallerView extends Component {
 
 
     render() {
+        // console.log(this.state.gallery)
+
         return (
             <div>
                 <MenuButton
-                    refs="buttons"
+                    ref="buttons"
                     schema={schema}
                     create={this.createPhoto}
+                    edit={this.editPhoto}
+                    delete={this.deletePhoto}
+                    editTrigger={this.getDefaultValue}
                     buttonList={
                         [
                             { buttonName: "Add Photo", buttonClass: "menu btn btn-info" },
@@ -84,19 +135,17 @@ export default class GallerView extends Component {
                     }
                 />
 
-                { this.state.loading ?
-                    <div>
-                        <img src={LoadingGif} alt="LoadingGIF" />
-                    </div>
+                <div>
+                { this.state.loading || (this.state.gallery.photos && this.state.gallery.photos.length === 0) ?
+                    <img src={LoadingGif} alt="LoadingGIF" />
                     :
-                    <div>
-                    <PhotoGallery
-                        refs="photos"
-                        photos={this.state.gallery.photos}
+                    <ImageGallery
+                        ref="photos"
+                        items={this.state.gallery.photos}
+                        thumbnailPosition="left"
                     />
-                    </div>
-
                 }
+                </div>
             </div>
         )
     };

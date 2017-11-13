@@ -67,7 +67,7 @@ export default class Galleries extends Component {
                 galleries: res.data,
                 loading: false
             })
-        })
+        });
     }
 
 
@@ -81,7 +81,7 @@ export default class Galleries extends Component {
                 galleries: res.data,
                 loading: false
             })
-        })
+        });
     };
 
     componentDidMount() {

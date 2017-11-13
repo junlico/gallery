@@ -10,7 +10,8 @@ export default class MenuButton extends Component {
         this.state = {
             clicked: -1,
             formVisible: false,
-            editTrigger: false
+            editToggle: false,
+            formData: {}
         };
 
         this.clickHandler = this.clickHandler.bind(this);
@@ -21,6 +22,19 @@ export default class MenuButton extends Component {
     clickHandler(event) {
         var nodes = Array.prototype.slice.call(event.currentTarget.children);
         var index = nodes.indexOf(event.target );
+        if (index === 1) {
+            let formData = JSON.parse(JSON.stringify(this.props.editTrigger()));
+            console.log(formData);
+            delete formData['_id'];
+            delete formData['__v'];
+            delete formData['thumbnail'];
+
+            formData.artist_id = formData.artist_id._id;
+            this.setState({formData: formData});
+
+        }else if (index === 2) {
+            this.props.delete();
+        }
         this.setState({ clicked: index });
     }
 
@@ -28,7 +42,7 @@ export default class MenuButton extends Component {
         if (this.state.clicked === 0) {
             this.props.create({formData});
         } else if (this.state.clicked === 1) {
-            // this.props.edit
+            this.props.edit({formData});
         }
         this.setState({ clicked: -1 });
     }
@@ -58,6 +72,7 @@ export default class MenuButton extends Component {
                                 <button type="button" className="form btn btn-warning" onClick={this.onCancel}>Cancel</button>
                             </div>
                         }
+                        formData={this.state.clicked === 1 ? this.state.formData : undefined}
                         onSubmit={this.onSubmit}
                     />
                 }
