@@ -1,0 +1,28 @@
+h1 {
+    text-align: center;
+    font-family: 'Droid Sans', sans-serif;
+    font-weight: bold;
+    color: #58595a;
+}
+
+div.col-sm-6 {
+    margin-bottom: 20px;
+}
+
+button {
+    margin-right: 20px;
+}
+
+button.menu {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+button.form {
+    margin-bottom: 20px;
+}
+
+form.rjsf {
+    margin-left: 30%;
+    width: 40%;
+}
