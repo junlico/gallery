@@ -9,83 +9,85 @@ const schema = {
     required: ["name"],
     properties: {
       name: {type: "string", title: "Name"},
+      birth_year: {type: "number", title: "Birth Year"},
+      country: {type: "string", title: "Country"},
       description: {type: "string", title: "Description"}
     }
 };
 
 
-export default class Galleries extends Component {
+export default class Artists extends Component {
 
     constructor() {
         super();
         this.state = {
-            galleries: [],
+            artists: [],
             loading: false
         };
-        this.loadGalleries = this.loadGalleries.bind(this);
-        this.createGallery = this.createGallery.bind(this);
-        this.deleteGallery = this.deleteGallery.bind(this);
-        this.editGallery   = this.editGallery.bind(this);
+        this.loadArtists = this.loadArtists.bind(this);
+        this.createArtist = this.createArtist.bind(this);
+        this.deleteArtist = this.deleteArtist.bind(this);
+        this.editArtist   = this.editArtist.bind(this);
     }
 
 
-    loadGalleries() {
+    loadArtists() {
 
         this.setState({ loading: true });
 
         axios.get(this.props.api)
         .then(res => {
             this.setState({
-                galleries: res.data,
+                artists: res.data,
                 loading: false
             });
         });
     };
 
 
-    createGallery({formData}) {
+    createArtist({formData}) {
 
         this.setState({ loading: true });
 
         axios.post(this.props.api, formData)
         .then(res => {
             this.setState({
-                galleries: res.data,
+                artists: res.data,
                 loading: false
             });
         });
     };
 
 
-    editGallery(gallery_id, {formData}) {
+    editArtist(gallery_id, {formData}) {
 
         this.setState({ loading: true });
 
         axios.put(this.props.api+'/'+gallery_id, formData)
         .then(res => {
             this.setState({
-                galleries: res.data,
+                artists: res.data,
                 loading: false
             })
         })
     }
 
 
-    deleteGallery(gallery_id) {
+    deleteArtist(gallery_id) {
 
         this.setState({ loading: true });
 
         axios.delete(this.props.api+'/'+gallery_id)
         .then(res => {
             this.setState({
-                galleries: res.data,
+                artists: res.data,
                 loading: false
             })
         })
     };
 
     componentDidMount() {
-        this.loadGalleries();
+        this.loadArtists();
     }
 
 
@@ -93,17 +95,17 @@ export default class Galleries extends Component {
         return (
             <div>
                 <MenuButton
-                    buttonName="Add New Gallery"
+                    buttonName="Add New Artist"
                     schema={schema}
-                    onSubmit={this.createGallery}
+                    onSubmit={this.createArtist}
                 />
                 <ItemList
-                    view='galleries'
+                    view='artists'
                     schema={schema}
-                    data={this.state.galleries}
+                    data={this.state.artists}
                     loading={this.state.loading}
-                    delete={this.deleteGallery}
-                    edit={this.editGallery}
+                    delete={this.deleteArtist}
+                    edit={this.editArtist}
                 />
             </div>
         )

@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
 import Form from "react-jsonschema-form";
 
-const schema = {
-    title: "Add New Gallery",
-    type: "object",
-    required: ["name"],
-    properties: {
-      name: {type: "string", title: "Name"},
-      description: {type: "string", title: "Description"}
-    }
-};
-
 
 export default class MenuButton extends Component {
 
@@ -43,12 +33,13 @@ export default class MenuButton extends Component {
     }
 
     render() {
+
         return (
             <div>
-                <button type="button" className="menu btn btn-info" onClick={this.onClick}>Add New Gallery</button>
+                <button type="button" className="menu btn btn-info" onClick={this.onClick}>{this.props.buttonName}</button>
                 {this.state.formVisible &&
                     <Form className="menuButton"
-                        schema={schema}
+                        schema={this.props.schema}
                         children={
                             <div>
                                 <button type="submit" className="form btn btn-info">Submit</button>

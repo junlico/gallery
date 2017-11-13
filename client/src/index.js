@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavLink from './components/NavLink';
 import Galleries from './components/Galleries';
+import Artists from './components/Artists';
 import './style.css';
 
 const api_url = 'http://localhost:3001/api'
@@ -23,6 +24,12 @@ class App extends Component {
                     <Route exact path='/galleries' render={() => (
                         <Galleries
                             api={api_url+'/galleries'}
+                        />
+                    )}/>
+
+                    <Route exact path='/artists' render={() => (
+                        <Artists
+                            api={api_url+'/artists'}
                         />
                     )}/>
                 </div>

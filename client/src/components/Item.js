@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import Form from "react-jsonschema-form";
 
-const schema = {
-    type: "object",
-    required: ["name"],
-    properties: {
-      name: {type: "string"},
-      description: {type: "string"}
-    }
-};
-
 
 export default class Item extends Component {
 
@@ -40,12 +31,14 @@ export default class Item extends Component {
 
     switchEditToggle(event) {
         event.preventDefault();
+        // make a copy of data
+        let formData = JSON.parse(JSON.stringify(this.state.data));
+        delete formData['_id'];
+        delete formData['__v'];
+        delete formData['photos'];
         this.setState({
             editToggle: true,
-            formData: {
-                name: this.state.data.name,
-                description: this.state.data.description
-            }
+            formData: formData
         })
     }
 
@@ -79,7 +72,7 @@ export default class Item extends Component {
                         :
                         <div className="card-body">
                             <Form className="editForm"
-                                schema={schema}
+                                schema={this.props.schema}
                                 formData={this.state.formData}
                                 children={
                                     <div>

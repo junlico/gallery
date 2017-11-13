@@ -15,6 +15,7 @@ const ItemList = (props) => {
                         <Item
                             key={i}
                             view={props.view}
+                            schema={props.schema}
                             data={item}
                             delete={props.delete}
                             edit={props.edit}
@@ -25,7 +26,7 @@ const ItemList = (props) => {
         )
     } else {
         return (
-            <h2>No data in database</h2>
+            <h1>No data in database</h1>
         )
     }
 };
