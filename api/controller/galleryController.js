@@ -1,26 +1,4 @@
 /*
-GET     /galleries              - returns the list of all galleries
-Post    /galleries              - creates a new gallery with description
-
-GET     /gallery/{:id}          - returns all images of the gallery with the given id,
-POST    /gallery/{:id}          - creates a new image of the gallery
-PUT     /gallery/{:id}          - updates a gallery by id
-DELETE  /gallery/{:id}          - removes a gallery by id
-
-GET     /images                 - returns the list of all images
-POST    /images                 - creates a new image with data specified
-
-GET     /image/{:id}            - returns a image with given id
-PUT     /image/{:id}            - update a image by id
-DELETE  /image/{:id}            - remove a image by id
-
-GET     /artists                - returns the list of all artists
-POST    /artists                - create a new artist
-
-GET     /artist/{:id}           - returns an artist with given id
-GET     /artist/{:id}/images    - return all images of the artist
-PUT     /artist/{:id}           - updates an artist by id
-DELETE  /artist/{:id}           - removes an artist
 https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-303078.jpg
 https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-585842.jpg
 https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-586355.jpg
