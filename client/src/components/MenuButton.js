@@ -35,7 +35,6 @@ export default class MenuButton extends Component {
     onSubmit({formData}) {
         this.setState({formVisible: false});
         this.props.onSubmit({formData});
-        // console.log(formData)
     }
 
     onCancel(event) {

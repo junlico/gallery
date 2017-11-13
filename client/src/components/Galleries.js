@@ -20,6 +20,7 @@ export default class Galleries extends Component {
         this.loadGalleries = this.loadGalleries.bind(this);
         this.createGallery = this.createGallery.bind(this);
         this.deleteGallery = this.deleteGallery.bind(this);
+        this.editGallery   = this.editGallery.bind(this);
     }
 
 
@@ -51,6 +52,20 @@ export default class Galleries extends Component {
     };
 
 
+    editGallery(gallery_id) {
+
+        this.setState({ loading: true });
+
+        axios.put(this.props.api+'/'+gallery_id)
+        .then(res => {
+            this.setState({
+                galleries: res.data,
+                loading: false
+            })
+        })
+    }
+
+
     deleteGallery(gallery_id) {
 
         this.setState({ loading: true });
@@ -65,7 +80,6 @@ export default class Galleries extends Component {
     };
 
     componentDidMount() {
-
         this.loadGalleries();
     }
 
@@ -81,6 +95,7 @@ export default class Galleries extends Component {
                     data={this.state.galleries}
                     loading={this.state.loading}
                     delete={this.deleteGallery}
+                    edit={this.editGallery}
                 />
             </div>
         )

@@ -17,6 +17,7 @@ const ItemList = (props) => {
                             view={props.view}
                             data={item}
                             delete={props.delete}
+                            edit={props.edit}
                         />
                     )
                 })}
