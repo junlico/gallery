@@ -1,25 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import MenuButton from './MenuButton';
 import ImageGallery from 'react-image-gallery';
 import LoadingGif from '../assets/Spinner.gif';
 
 const base_url = 'http://localhost:3001/api';
 
-const schema = {
-    type: "object",
-    required: ["title", "original"],
-    properties: {
-        title: {type: "string", title: "Title"},
-        original: {type: "string", title: "Link"},
-        artist_id: {type: "string", title: "Artist_id"},
-        year: {type: "number", title: "Year"},
-        width: {type: "number", title: "Width"},
-        height: {type: "number", title: "Height"},
-        location: {type: "string", title: "Location"},
-        description: {type: "string", title: "Description"}
-    }
-};
 
 export default class ArtistView extends Component {
 

@@ -35,6 +35,7 @@ export default class GallerView extends Component {
         this.editPhoto = this.editPhoto.bind(this);
         this.deletePhoto = this.deletePhoto.bind(this);
         this.getDefaultValue = this.getDefaultValue.bind(this);
+        this.onClick = this.onClick.bind(this);
     };
 
 
@@ -105,7 +106,9 @@ export default class GallerView extends Component {
         return photo;
     }
 
-
+    onClick(event) {
+        console.log(event.target)
+    }
 
     componentDidMount() {
         this.loadPhotos();
@@ -114,6 +117,10 @@ export default class GallerView extends Component {
 
     render() {
         // console.log(this.state.gallery)
+
+        if (this.refs.photos) {
+            console.log(this.refs.photos)
+        }
 
         return (
             <div>
@@ -137,11 +144,21 @@ export default class GallerView extends Component {
                 { this.state.loading || (this.state.gallery.photos && this.state.gallery.photos.length === 0) ?
                     <img src={LoadingGif} alt="LoadingGIF" />
                     :
-                    <ImageGallery
-                        ref="photos"
-                        items={this.state.gallery.photos}
-                        thumbnailPosition="left"
-                    />
+                    <div className="row">
+                        <ImageGallery
+                            ref="photos"
+                            items={this.state.gallery.photos}
+                            thumbnailPosition="left"
+                            onClick={this.onClick}
+                        />
+                        <div className="card">
+                            <div className="card-body">
+                                <h4 className="card-title">TEST</h4>
+                                <p className="card-text"> This is TEST Infokdjj</p>
+                            </div>
+                        </div>
+
+                    </div>
                 }
                 </div>
             </div>
