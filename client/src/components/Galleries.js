@@ -94,6 +94,7 @@ export default class Galleries extends Component {
             <div>
                 <MenuButton
                     schema={schema}
+                    create={this.createGallery}
                     buttonList={
                         [
                             {
@@ -102,7 +103,7 @@ export default class Galleries extends Component {
                             }
                         ]
                     }
-                    create={this.createGallery}
+
                 />
 
                 <ItemList

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ItemList from './ItemList';
-import ButtonList from './ButtonList';
+import MenuButton from './MenuButton';
 
 
 const schema = {
@@ -94,13 +94,14 @@ export default class Artists extends Component {
     render() {
         return (
             <div>
-                <ButtonList
+                <MenuButton
                     schema={schema}
+                    create={this.createArtist}
                     buttonList={
                         [
                             {
                                 buttonName: "Add Artist",
-                                onSubmit: this.createArtist
+                                buttonClass: "menu btn btn-info"
                             }
                         ]
                     }

@@ -21,12 +21,12 @@ const schema = {
     }
 };
 
-export default class GallerView extends Component {
+export default class ArtistView extends Component {
 
     constructor(props) {
         super(props);
         this.state ={
-            gallery: {},
+            artist: {},
             loading: false
         };
 
@@ -45,7 +45,7 @@ export default class GallerView extends Component {
         axios.get(base_url+this.props.match.url)
         .then(res => {
             this.setState({
-                gallery: res.data,
+                artist: res.data,
                 loading: false
             })
         });
@@ -58,7 +58,7 @@ export default class GallerView extends Component {
         axios.post(base_url+this.props.match.url, formData)
         .then(res => {
             this.setState({
-                gallery: res.data,
+                artist: res.data,
                 loading: false
             });
         });
@@ -66,16 +66,16 @@ export default class GallerView extends Component {
 
 
     editPhoto({formData}) {
-        if (this.state.gallery.photos && this.state.gallery.photos.length > 0) {
+        if (this.state.artist.photos && this.state.artist.photos.length > 0) {
             let index = this.refs.photos.getCurrentIndex();
-            let photo_id = this.state.gallery.photos[index]._id;
+            let photo_id = this.state.artist.photos[index]._id;
 
             this.setState({ loading: true });
 
             axios.put(base_url+this.props.match.url+'/'+photo_id, formData)
             .then(res => {
                 this.setState({
-                    gallery: res.data,
+                    artist: res.data,
                     loading: false
                 });
             });
@@ -83,9 +83,9 @@ export default class GallerView extends Component {
     };
 
     deletePhoto() {
-        if (this.state.gallery.photos && this.state.gallery.photos.length > 0) {
+        if (this.state.artist.photos && this.state.artist.photos.length > 0) {
             let index = this.refs.photos.getCurrentIndex();
-            let photo_id = this.state.gallery.photos[index]._id;
+            let photo_id = this.state.artist.photos[index]._id;
 
             this.setState({ loading: true });
 
@@ -101,7 +101,7 @@ export default class GallerView extends Component {
 
     getDefaultValue() {
         let index = this.refs.photos.getCurrentIndex();
-        let photo = this.state.gallery.photos[index];
+        let photo = this.state.artist.photos[index];
         return photo;
     }
 
@@ -116,34 +116,16 @@ export default class GallerView extends Component {
         // console.log(this.state.gallery)
 
         return (
-            <div>
-                <MenuButton
-                    ref="buttons"
-                    schema={schema}
-                    create={this.createPhoto}
-                    edit={this.editPhoto}
-                    delete={this.deletePhoto}
-                    editTrigger={this.getDefaultValue}
-                    buttonList={
-                        [
-                            { buttonName: "Add Photo", buttonClass: "menu btn btn-info" },
-                            { buttonName: "Edit Photo", buttonClass: "menu btn btn-warning" },
-                            { buttonName: "Delete Photo", buttonClass: "menu btn btn-danger" }
-                        ]
-                    }
-                />
-
-                <div>
-                { this.state.loading || (this.state.gallery.photos && this.state.gallery.photos.length === 0) ?
+            <div className="View">
+                { this.state.loading || (this.state.artist.photos && this.state.artist.photos.length === 0) ?
                     <img src={LoadingGif} alt="LoadingGIF" />
                     :
                     <ImageGallery
                         ref="photos"
-                        items={this.state.gallery.photos}
+                        items={this.state.artist.photos}
                         thumbnailPosition="left"
                     />
                 }
-                </div>
             </div>
         )
     };

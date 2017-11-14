@@ -14,9 +14,12 @@ div.col-sm-6 {
 div.image-gallery {
     width: 80%;
     height: 80%;
-    margin-left: 5%;
+    /* margin-left: 5%; */
 }
 
+div.View {
+    margin-top: 20px;
+}
 ButtonList {
     margin-left: 20px;
 }

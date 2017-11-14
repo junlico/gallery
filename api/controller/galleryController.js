@@ -32,7 +32,13 @@ listAllPhotos = (id, res, view='galleryView') => {
                 if (err) res.send(err);
                 res.json(artist);
             });
-    }
+    } else if (view === 'photos') {
+        Photo
+            .find({}, (err, photos) => {
+                if (err) res.send(err);
+                res.json(photos);
+            });
+    };
 };
 
 
@@ -195,4 +201,9 @@ exports.deleteArtist = (req, res) => {
 // Return a list of all photos of the artist
 exports.artistView = (req, res) => {
     listAllPhotos(req.params.artist_id, res, 'artistView');
-} ;
+};
+
+
+exports.photoView = (req, res) => {
+    listAllPhotos(0, res, 'photos');
+};
