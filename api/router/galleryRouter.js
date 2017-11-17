@@ -45,5 +45,8 @@ router.route('/artists/:artist_id')
 
 router.route('/photos')
     .get(controller.photoView)
+    .post(controller.searchPhotos)
+
+
 
 module.exports = router;

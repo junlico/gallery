@@ -17,8 +17,8 @@ const ItemList = (props) => {
                             view={props.view}
                             schema={props.schema}
                             data={item}
-                            delete={props.delete}
                             edit={props.edit}
+                            delete={props.delete}
                         />
                     )
                 })}

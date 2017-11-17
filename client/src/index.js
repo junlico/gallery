@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavLink from './components/NavLink';
 import Galleries from './components/Galleries';
 import Artists from './components/Artists';
-import GalleryView from './components/GalleryView';
+import GalleryView from './components/GalleryView/GalleryView';
 import ArtistView from './components/ArtistView';
 import PhotoView from './components/PhotoView';
 import './style.css';
 
-const base_url = 'http://localhost:3001/api'
+const API_URL = 'http://localhost:3001/api';
 
 class App extends Component {
 
@@ -24,21 +24,18 @@ class App extends Component {
                         <li className="nav-item"><NavLink to='/artists'>Artists</NavLink></li>
                     </ul>
 
-                    <Route exact path='/galleries' render={() => (
-                        <Galleries
-                            api={base_url+'/galleries'}
-                        />
-                    )}/>
+                    <Route exact path='/galleries' render={props =>
+                        <Galleries api={API_URL} {...props}/>
+                    }/>
 
-                    <Route exact path='/artists' render={() => (
-                        <Artists
-                            api={base_url+'/artists'}
-                        />
-                    )}/>
+                    <Route exact path='/artists' render={props =>
+                        <Artists api={API_URL} {...props}/>
+                    }/>
 
-                    <Route path='/galleries/:gallery_id' component={GalleryView}/>
-                    <Route path='/artists/:artist_id' component={ArtistView}/>
-                    <Route path='/photos' component={PhotoView}/>
+
+                    <Route path='/galleries/:gallery_id' render={props => <GalleryView api={API_URL} {...props}/>}/>
+                    <Route path='/artists/:artist_id' render={props => <ArtistView api={API_URL} {...props}/>}/>
+                    <Route path='/photos' render={props => <PhotoView api={API_URL} {...props}/>}/>
                 </div>
             </Router>
         )

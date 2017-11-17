@@ -3,7 +3,6 @@ import axios from 'axios';
 import ItemList from './ItemList';
 import MenuButton from './MenuButton';
 
-
 const schema = {
     type: "object",
     required: ["name"],
@@ -20,12 +19,15 @@ export default class Galleries extends Component {
         super();
         this.state = {
             galleries: [],
+            addFormVisible: false,
             loading: false
         };
         this.loadGalleries = this.loadGalleries.bind(this);
         this.createGallery = this.createGallery.bind(this);
         this.deleteGallery = this.deleteGallery.bind(this);
         this.editGallery   = this.editGallery.bind(this);
+        this.openAddForm   = this.openAddForm.bind(this);
+        this.closeAddForm  = this.closeAddForm.bind(this);
     }
 
 
@@ -33,7 +35,7 @@ export default class Galleries extends Component {
 
         this.setState({ loading: true });
 
-        axios.get(this.props.api)
+        axios.get(this.props.api+this.props.location.pathname)
         .then(res => {
             this.setState({
                 galleries: res.data,
@@ -47,7 +49,7 @@ export default class Galleries extends Component {
 
         this.setState({ loading: true });
 
-        axios.post(this.props.api, formData)
+        axios.post(this.props.api+this.props.location.pathname, formData)
         .then(res => {
             this.setState({
                 galleries: res.data,
@@ -61,12 +63,12 @@ export default class Galleries extends Component {
 
         this.setState({ loading: true });
 
-        axios.put(this.props.api+'/'+gallery_id, formData)
+        axios.put(this.props.api+this.props.location.pathname+'/'+gallery_id, formData)
         .then(res => {
             this.setState({
                 galleries: res.data,
                 loading: false
-            })
+            });
         });
     }
 
@@ -75,14 +77,23 @@ export default class Galleries extends Component {
 
         this.setState({ loading: true });
 
-        axios.delete(this.props.api+'/'+gallery_id)
+        axios.delete(this.props.api+this.props.location.pathname+'/'+gallery_id)
         .then(res => {
             this.setState({
                 galleries: res.data,
                 loading: false
-            })
+            });
         });
     };
+
+    openAddForm(event) {
+        event.preventDefault();
+        this.setState({ addFormVisible: true });
+    }
+
+    closeAddForm(event) {
+        this.setState({ addFormVisible: false });
+    }
 
     componentDidMount() {
         this.loadGalleries();
@@ -90,20 +101,13 @@ export default class Galleries extends Component {
 
 
     render() {
+        // console.log(this.props)
         return (
             <div>
                 <MenuButton
                     schema={schema}
+                    buttonList={[{ buttonName: "Add Gallery", buttonClass: "menu btn btn-info", buttonType: 0 }]}
                     create={this.createGallery}
-                    buttonList={
-                        [
-                            {
-                                buttonName: "Add Gallery",
-                                buttonClass: "menu btn btn-info",
-                            }
-                        ]
-                    }
-
                 />
 
                 <ItemList

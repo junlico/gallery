@@ -35,7 +35,7 @@ export default class Artists extends Component {
 
         this.setState({ loading: true });
 
-        axios.get(this.props.api)
+        axios.get(this.props.api + this.props.location.pathname)
         .then(res => {
             this.setState({
                 artists: res.data,
@@ -49,7 +49,7 @@ export default class Artists extends Component {
 
         this.setState({ loading: true });
 
-        axios.post(this.props.api, formData)
+        axios.post(this.props.api + this.props.location.pathname, formData)
         .then(res => {
             this.setState({
                 artists: res.data,
@@ -63,7 +63,7 @@ export default class Artists extends Component {
 
         this.setState({ loading: true });
 
-        axios.put(this.props.api+'/'+gallery_id, formData)
+        axios.put(this.props.api + this.props.location.pathname + '/'+gallery_id, formData)
         .then(res => {
             this.setState({
                 artists: res.data,
@@ -77,7 +77,7 @@ export default class Artists extends Component {
 
         this.setState({ loading: true });
 
-        axios.delete(this.props.api+'/'+gallery_id)
+        axios.delete(this.props.api + this.props.location.pathname + '/'+gallery_id)
         .then(res => {
             this.setState({
                 artists: res.data,

@@ -3,7 +3,6 @@ import axios from 'axios';
 import ImageGallery from 'react-image-gallery';
 import LoadingGif from '../assets/Spinner.gif';
 
-const base_url = 'http://localhost:3001/api';
 
 
 export default class ArtistView extends Component {
@@ -27,7 +26,7 @@ export default class ArtistView extends Component {
 
         this.setState({ loading: true });
 
-        axios.get(base_url+this.props.match.url)
+        axios.get(this.props.api + this.props.location.pathname)
         .then(res => {
             this.setState({
                 artist: res.data,
@@ -40,7 +39,7 @@ export default class ArtistView extends Component {
     createPhoto({formData}) {
         this.setState({ loading: true });
 
-        axios.post(base_url+this.props.match.url, formData)
+        axios.post(this.props.api + this.props.location.pathname, formData)
         .then(res => {
             this.setState({
                 artist: res.data,
@@ -57,7 +56,7 @@ export default class ArtistView extends Component {
 
             this.setState({ loading: true });
 
-            axios.put(base_url+this.props.match.url+'/'+photo_id, formData)
+            axios.put(this.props.api + this.props.location.pathname+'/'+photo_id, formData)
             .then(res => {
                 this.setState({
                     artist: res.data,
@@ -74,7 +73,7 @@ export default class ArtistView extends Component {
 
             this.setState({ loading: true });
 
-            axios.delete(base_url+this.props.match.url+'/'+photo_id)
+            axios.delete(this.props.api + this.props.location.pathname+'/'+photo_id)
             .then(res => {
                 this.setState({
                     gallery: res.data,
@@ -98,7 +97,6 @@ export default class ArtistView extends Component {
 
 
     render() {
-        // console.log(this.state.gallery)
 
         return (
             <div className="View">

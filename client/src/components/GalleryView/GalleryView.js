@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import MenuButton from './MenuButton';
+import MenuButton from '../MenuButton';
 import ImageGallery from 'react-image-gallery';
-import LoadingGif from '../assets/Spinner.gif';
-
+import LoadingGif from '../../assets/Spinner.gif';
+import './image-gallery.css'
 const base_url = 'http://localhost:3001/api';
+
 
 const schema = {
     type: "object",
@@ -21,12 +22,27 @@ const schema = {
     }
 };
 
+
+const uiSchema = {
+    "ui:order": ["title",  "artist_id", "original","width", "height", "year", "location", "description"],
+    title: { classNames: "col-6 left" },
+    artist_id: { classNames: "col-6 right" },
+    original: { classNames: "col-6 left" },
+    width:{ classNames: "col-6 right" },
+    height:{ classNames: "col-6 right"},
+    year:{ classNames: "col-6 left" },
+    location:{ classNames: "col-6 right"},
+    description: {
+        "ui:widget": "textarea"
+    }
+}
 export default class GallerView extends Component {
 
     constructor(props) {
         super(props);
         this.state ={
             gallery: {},
+            photoVisible: true,
             loading: false
         };
 
@@ -35,7 +51,7 @@ export default class GallerView extends Component {
         this.editPhoto = this.editPhoto.bind(this);
         this.deletePhoto = this.deletePhoto.bind(this);
         this.getDefaultValue = this.getDefaultValue.bind(this);
-        this.onClick = this.onClick.bind(this);
+
     };
 
 
@@ -43,7 +59,7 @@ export default class GallerView extends Component {
 
         this.setState({ loading: true });
 
-        axios.get(base_url+this.props.match.url)
+        axios.get(this.props.api + this.props.location.pathname)
         .then(res => {
             this.setState({
                 gallery: res.data,
@@ -56,7 +72,7 @@ export default class GallerView extends Component {
     createPhoto({formData}) {
         this.setState({ loading: true });
 
-        axios.post(base_url+this.props.match.url, formData)
+        axios.post(this.props.api + this.props.location.pathname, formData)
         .then(res => {
             this.setState({
                 gallery: res.data,
@@ -83,6 +99,7 @@ export default class GallerView extends Component {
         };
     };
 
+
     deletePhoto() {
         if (this.state.gallery.photos && this.state.gallery.photos.length > 0) {
             let index = this.refs.photos.getCurrentIndex();
@@ -106,62 +123,54 @@ export default class GallerView extends Component {
         return photo;
     }
 
-    onClick(event) {
-        console.log(event.target)
-    }
-
     componentDidMount() {
         this.loadPhotos();
     };
 
 
-    render() {
-        // console.log(this.state.gallery)
+    showGallery() {
+        this.setState({ photoVisible: true });
+    }
 
-        if (this.refs.photos) {
-            console.log(this.refs.photos)
-        }
+    hideGallery() {
+        this.setState({ photoVisible: false });
+    }
+
+    render() {
 
         return (
-            <div>
+            <div className="GalleryView">
                 <MenuButton
-                    ref="buttons"
                     schema={schema}
+                    uiSchema={uiSchema}
                     create={this.createPhoto}
                     edit={this.editPhoto}
+                    photoInfo={this.getDefaultValue}
                     delete={this.deletePhoto}
-                    editTrigger={this.getDefaultValue}
                     buttonList={
                         [
-                            { buttonName: "Add Photo", buttonClass: "menu btn btn-info" },
-                            { buttonName: "Edit Photo", buttonClass: "menu btn btn-warning" },
-                            { buttonName: "Delete Photo", buttonClass: "menu btn btn-danger" }
+                            { buttonName: "Add Photo", buttonClass: "menu btn btn-info", buttonType: 0 },
+                            { buttonName: "Show Details", buttonClass: "menu btn btn-success", buttonType: 1 },
+                            { buttonName: "Delete Photo", buttonClass: "menu btn btn-danger", buttonType: 2 },
                         ]
                     }
                 />
 
-                <div>
-                { this.state.loading || (this.state.gallery.photos && this.state.gallery.photos.length === 0) ?
+                {this.state.loading &&
                     <img src={LoadingGif} alt="LoadingGIF" />
-                    :
-                    <div className="row">
+                }
+
+                {this.state.photoVisible &&
+                    <div className="ImageGallery">
                         <ImageGallery
                             ref="photos"
                             items={this.state.gallery.photos}
                             thumbnailPosition="left"
-                            onClick={this.onClick}
                         />
-                        <div className="card">
-                            <div className="card-body">
-                                <h4 className="card-title">TEST</h4>
-                                <p className="card-text"> This is TEST Infokdjj</p>
-                            </div>
-                        </div>
-
                     </div>
                 }
-                </div>
             </div>
         )
     };
 }
+

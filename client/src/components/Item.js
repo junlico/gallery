@@ -85,6 +85,7 @@ export default class Item extends Component {
                         </div>
                     }
                 </div>
+
             </div>
         )
     }

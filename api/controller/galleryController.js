@@ -48,7 +48,7 @@ exports.createGallery = (req, res) => {
     var gallery = new Gallery(req.body);
     gallery.save()
         .then(() => {
-            this.listGalleries(0, res);
+            this.listGalleries(null, res);
         });
 };
 
@@ -68,7 +68,7 @@ exports.listGalleries = (req, res) => {
 exports.editGallery = (req, res) => {
     Gallery.findByIdAndUpdate(req.params.gallery_id, { $set: req.body }).exec()
         .then(() => {
-            this.listGalleries(0, res);
+            this.listGalleries(null, res);
         });
 };
 
@@ -78,7 +78,7 @@ exports.editGallery = (req, res) => {
 exports.deleteGallery = (req, res) => {
     Gallery.findByIdAndRemove(req.params.gallery_id).exec()
         .then(() => {
-            this.listGalleries(0, res);
+            this.listGalleries(null, res);
         });
 }
 
@@ -154,7 +154,7 @@ exports.createArtist = (req, res) => {
     var artist = new Artist(req.body);
     artist.save()
     .then(() => {
-        this.listArtists(0, res);
+        this.listArtists(null, res);
     });
 };
 
@@ -174,7 +174,7 @@ exports.listArtists = (req, res) => {
 exports.editArtist = (req, res) => {
     Artist.findByIdAndUpdate(req.params.artist_id, { $set: req.body }).exec()
     .then(() => {
-        this.listArtists(0, res);
+        this.listArtists(null, res);
     });
 }
 
@@ -204,6 +204,17 @@ exports.artistView = (req, res) => {
 };
 
 
+exports.searchPhotos = (req, res) => {
+    // Photo.find({}, (err, photos) => {
+    //     photos.where('')
+    // })
+    // res.json(req.body)
+    Photo.where('year').gte(req.body.create_year_gte).lte(req.body.create_year_lte).exec((err, photos) => {
+        res.json(photos)
+    })
+};
+
+
 exports.photoView = (req, res) => {
-    listAllPhotos(0, res, 'photos');
+    listAllPhotos(null, res, 'photos');
 };
